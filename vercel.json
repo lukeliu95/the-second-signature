@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "website",
+  "framework": null,
   "cleanUrls": false,
   "trailingSlash": false,
   "headers": [
