@@ -1,0 +1,19 @@
+# Vercel
+.vercel
+.env*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# gei-imagine debug text replies (model text-side output, not deliverables)
+website/assets/characters/*.txt
+website/assets/*.txt
+*.png.txt
+*.jpg.txt

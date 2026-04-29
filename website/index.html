@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>第二次署名 | GEI 多轮生成与发布版阅读</title>
+  <meta name="description" content="《第二次署名》— 一部经过 11 轮 GEI 迭代生成的中文女性向重生复仇小说。本页展示完整的创作过程、全人物设定与发布版正文阅读。作者:刘仙升 (@LukeLiu95)。" />
+  <meta property="og:title" content="第二次署名 · GEI 创作过程展示" />
+  <meta property="og:description" content="11 轮 Phase D 迭代,从需求识别到 24 章发布版。GEI Agent 全自动协同写作。" />
+  <meta property="og:type" content="article" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%239d3326'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='30' fill='white' font-family='serif'%3E%E7%BD%B2%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --paper: #f8f4eb;
+      --paper-2: #efe7d8;
+      --surface: #fffaf1;
+      --surface-2: #f4eddf;
+      --ink: #171512;
+      --ink-2: #403a32;
+      --muted: #766c5f;
+      --line: #d8cdbb;
+      --accent: #9d3326;
+      --accent-2: #1f6b5f;
+      --gold: #b78332;
+      --shadow: 0 20px 70px rgba(34, 26, 16, .14);
+      --radius: 8px;
+      --max: 1180px;
+      --reader: 780px;
+      color-scheme: light;
+    }
+
+    body.dark {
+      --paper: #171816;
+      --paper-2: #23241f;
+      --surface: #1e201c;
+      --surface-2: #27291f;
+      --ink: #f4eadc;
+      --ink-2: #d8cbb8;
+      --muted: #a79a87;
+      --line: #403b32;
+      --accent: #d56a55;
+      --accent-2: #7fc5b9;
+      --gold: #d6a85c;
+      --shadow: 0 22px 80px rgba(0, 0, 0, .35);
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      font: 16px/1.7 ui-serif, "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(157, 51, 38, .06), transparent 18%, transparent 82%, rgba(31, 107, 95, .06)),
+        var(--paper);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(157, 51, 38, .11), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(31, 107, 95, .11), transparent 24%),
+        linear-gradient(rgba(23, 21, 18, .035) 1px, transparent 1px);
+      background-size: auto, auto, 100% 36px;
+      opacity: .75;
+    }
+
+    a { color: inherit; text-decoration-color: rgba(157, 51, 38, .42); text-underline-offset: 4px; }
+    img { display: block; max-width: 100%; }
+    button {
+      font: inherit;
+      color: inherit;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--accent); }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 20;
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--gold));
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      backdrop-filter: blur(18px);
+      background: color-mix(in srgb, var(--paper) 84%, transparent);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font: 700 15px/1.2 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .08em;
+      text-decoration: none;
+    }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--accent);
+      border-radius: 50%;
+      letter-spacing: 0;
+    }
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      font: 600 13px/1.2 ui-sans-serif, system-ui, sans-serif;
+    }
+    .nav a,
+    .nav button {
+      padding: 8px 10px;
+      text-decoration: none;
+    }
+
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      min-height: calc(100dvh - 58px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(320px, .72fr);
+      gap: clamp(28px, 5vw, 66px);
+      align-items: center;
+      padding: clamp(34px, 7vw, 82px) 20px 34px;
+    }
+    .kicker {
+      margin: 0 0 18px;
+      font: 700 13px/1.2 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .18em;
+      color: var(--accent);
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(58px, 12vw, 132px);
+      line-height: .92;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+    .hero-copy {
+      max-width: 740px;
+      margin: 24px 0 0;
+      font-size: clamp(19px, 2.3vw, 26px);
+      line-height: 1.55;
+      color: var(--ink-2);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+    .btn {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 1px solid var(--ink);
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: var(--paper);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .btn.secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 36px;
+      max-width: 610px;
+    }
+    .stat {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+    .stat strong {
+      display: block;
+      font: 800 28px/1 ui-sans-serif, system-ui, sans-serif;
+      color: var(--accent);
+    }
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font: 600 13px/1.4 ui-sans-serif, system-ui, sans-serif;
+    }
+    .cover-wrap {
+      position: relative;
+      align-self: stretch;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cover-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 9% -4% 4% 12%;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      transform: rotate(4deg);
+    }
+    .cover {
+      position: relative;
+      width: min(410px, 84vw);
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 78px 20px;
+      border-top: 1px solid var(--line);
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(190px, .38fr) minmax(0, 1fr);
+      gap: 34px;
+      margin-bottom: 32px;
+      align-items: start;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1.06;
+      letter-spacing: 0;
+    }
+    .section-head p {
+      margin: 0;
+      color: var(--ink-2);
+      font-size: 18px;
+      max-width: 760px;
+    }
+
+    /* GEI process — now featured at top */
+    .process-visual {
+      margin-bottom: 28px;
+      height: min(42vw, 430px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .process-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+    .round {
+      display: grid;
+      grid-template-columns: 100px minmax(0, 1fr) 100px;
+      gap: 16px;
+      align-items: start;
+      padding: 16px 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .round-num,
+    .round-score {
+      font: 800 13px/1.2 ui-sans-serif, system-ui, sans-serif;
+      color: var(--accent);
+    }
+    .round-score { text-align: right; }
+    .round h3 {
+      margin: 0 0 6px;
+      font: 850 18px/1.3 ui-sans-serif, system-ui, sans-serif;
+    }
+    .round p { margin: 0; color: var(--muted); }
+    .phase-tag {
+      display: inline-block;
+      margin-bottom: 6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      font: 700 11px/1.4 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .08em;
+      color: var(--accent-2);
+    }
+
+    /* Highlights */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      min-height: 190px;
+    }
+    .feature b {
+      display: block;
+      margin-bottom: 10px;
+      font: 800 15px/1.3 ui-sans-serif, system-ui, sans-serif;
+      color: var(--accent);
+    }
+    .feature p { margin: 0; color: var(--ink-2); }
+
+    /* Character gallery (with portraits) */
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .character-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .character-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .character-card .portrait {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-bottom: 1px solid var(--line);
+    }
+    .character-card .body {
+      padding: 18px 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .character-card h3 {
+      margin: 0;
+      font: 800 19px/1.3 ui-sans-serif, system-ui, sans-serif;
+    }
+    .character-card .role {
+      display: inline-block;
+      margin: 0;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      font: 700 11px/1.5 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .06em;
+      color: var(--accent);
+      width: fit-content;
+    }
+    .character-card .meta {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font: 600 13px/1.5 ui-sans-serif, system-ui, sans-serif;
+    }
+    .character-card p.bio { margin: 6px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.65; }
+    .character-card .quote {
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border-left: 3px solid var(--accent);
+      background: var(--surface-2);
+      color: var(--ink-2);
+      font: italic 13px/1.55 ui-serif, "Songti SC", serif;
+    }
+
+    /* Reader (now at bottom) */
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+    .image-panel {
+      min-height: 420px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface-2);
+    }
+    .image-panel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .reader-shell {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 74px;
+      max-height: calc(100dvh - 96px);
+      overflow: auto;
+      padding: 14px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      font: 600 13px/1.45 ui-sans-serif, system-ui, sans-serif;
+    }
+    .toc-title {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-weight: 900;
+    }
+    .toc a {
+      display: block;
+      padding: 7px 0;
+      color: var(--ink-2);
+      text-decoration: none;
+      border-top: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+    }
+    .reader-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+    .reader-tools button { padding: 8px 11px; font-weight: 700; }
+    .novel {
+      max-width: var(--reader);
+      margin: 0 auto;
+      padding: clamp(20px, 5vw, 54px);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 34px rgba(34, 26, 16, .08);
+    }
+    .novel h1 {
+      font-size: clamp(38px, 7vw, 72px);
+      line-height: 1.06;
+      margin-bottom: 34px;
+    }
+    .novel h2 {
+      margin: 52px 0 20px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.25;
+    }
+    .novel p {
+      margin: 0 0 1.05em;
+      text-indent: 2em;
+      color: var(--ink-2);
+      font-size: var(--reader-font, 18px);
+      line-height: var(--reader-line, 1.9);
+    }
+    .loading {
+      padding: 36px;
+      color: var(--muted);
+      text-align: center;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+
+    /* Author block */
+    .author-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      padding: 28px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      align-items: center;
+    }
+    .author-card .lead {
+      font: 700 14px/1.4 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .14em;
+      color: var(--accent);
+      margin: 0 0 6px;
+    }
+    .author-card h3 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.4vw, 40px);
+      line-height: 1.1;
+    }
+    .author-card p { margin: 0 0 8px; color: var(--ink-2); }
+    .author-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+    .author-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .author-links a:hover { border-color: var(--accent); }
+
+    .footer {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 20px 54px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font: 600 13px/1.6 ui-sans-serif, system-ui, sans-serif;
+    }
+    .footer .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer a { color: var(--ink-2); }
+
+    @media (max-width: 980px) {
+      .hero,
+      .section-head,
+      .split,
+      .reader-shell { grid-template-columns: 1fr; }
+      .cover-wrap { min-height: auto; }
+      .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .character-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .toc { position: relative; top: auto; max-height: 260px; }
+    }
+    @media (max-width: 640px) {
+      .topbar-inner { align-items: flex-start; }
+      .nav { gap: 5px; }
+      .stats,
+      .feature-grid,
+      .character-grid { grid-template-columns: 1fr; }
+      .round { grid-template-columns: 1fr; gap: 8px; }
+      .round-score { text-align: left; }
+      section { padding: 56px 16px; }
+      .hero { padding-left: 16px; padding-right: 16px; }
+      .novel { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="返回顶部"><span class="brand-mark">署</span><span>第二次署名</span></a>
+      <nav class="nav" aria-label="页面导航">
+        <a href="#process">创作过程</a>
+        <a href="#highlights">作品亮点</a>
+        <a href="#characters">人物画廊</a>
+        <a href="#author">作者</a>
+        <a href="#read">原文阅读</a>
+        <button type="button" id="themeToggle">夜间</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <article class="hero">
+      <div>
+        <p class="kicker">GEI Phase D Round 011 · Public Release</p>
+        <h1>第二次<br />署名</h1>
+        <p class="hero-copy">一部经过 11 轮 GEI 迭代的中文女性向重生复仇小说。她从湖边死亡回到开题前，用录音键、证据链和女性同盟，把被抹掉的名字重新放回项目书。</p>
+        <div class="hero-actions">
+          <a class="btn" href="#process">查看创作过程</a>
+          <a class="btn secondary" href="#read">阅读 24 章正文</a>
+        </div>
+        <div class="stats" aria-label="交付状态">
+          <div class="stat"><strong>24</strong><span>章完整发布版正文</span></div>
+          <div class="stat"><strong>11</strong><span>轮 Phase D 迭代精修</span></div>
+          <div class="stat"><strong>95.5</strong><span>GEI 综合评分 / 100</span></div>
+        </div>
+      </div>
+      <div class="cover-wrap" aria-label="小说封面插图">
+        <img class="cover" src="assets/hero-cover.png" alt="女博士在证据与校园湖景之间重新夺回署名的封面插图" />
+      </div>
+    </article>
+
+    <!-- 1. GEI 创作过程 (顶部 · 用户指定) -->
+    <section id="process">
+      <div class="section-head">
+        <h2>11 轮 GEI 协作生成</h2>
+        <p>这不是一次性提示词产出的故事。GEI Agent 走完 Phase A 需求识别 → Phase B 设定与开篇 → Phase C 质量评估 → Phase D 11 轮 CEO 循环精修，把爽文骨架、女权视角、智性取证和现实主义后段缝在一起。每轮都有独立的目标、产物与评分变化。</p>
+      </div>
+      <div class="process-visual">
+        <img src="assets/process-studio.png" alt="AI 辅助创作、章节卡片和多轮迭代工作台插图" />
+      </div>
+      <div class="timeline" aria-label="生成过程时间线">
+        <article class="round">
+          <div class="round-num">Phase A-C</div>
+          <div>
+            <span class="phase-tag">基底</span>
+            <h3>需求识别 · 世界观 · 人物 · 大纲 · 开篇 · 质量评估</h3>
+            <p>研究"集美文学"语境，建立现代女频重生复仇框架，设计世界观/人物/24 章大纲，写出开篇样章并完成首轮质量评估。</p>
+          </div>
+          <div class="round-score">→ 88.5</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 001</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>节奏设计与新增元素整合</h3>
+            <p>把"体内模型 / 脑内豆包 / 符合组织要求[强] / 男一男二争风吃醋"纳入结构系统，新增 beat-map 平衡爽点、痛点、泪点。</p>
+          </div>
+          <div class="round-score">88.5 → 91.2</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 002</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>女博士与世界五百强项目升级</h3>
+            <p>女主升级为社会学博士，行动半径扩展到博士课题、社会项目和校企合作；陆知白升级为陆氏寰球家族公子，加入"震惊校长"中段强爽点。</p>
+          </div>
+          <div class="round-score">91.2 → 92.4</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 003</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>全章草稿与文学评审</h3>
+            <p>完成 24 章草稿（1987 行），引入文学大师 agent 独立评估，识别"资源外挂感、后半段过快、反派复杂度不足、结尾宣言偏重"四个问题。</p>
+          </div>
+          <div class="round-score">→ 84</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 004</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>文学性与现实阻力增强</h3>
+            <p>陆氏资源降为外部预审之后的放大器，加深周予衡/宋绮年动机，新增第 18 章何蔓被压/刘姨调岗/蒋曼青材料被质疑的低谷段，结尾去宣言化。</p>
+          </div>
+          <div class="round-score">84 → 88</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 005</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>法律程序与时间跨度精修</h3>
+            <p>新增宋绮年新闻发布会反扑，按七个月展开专项调查、学术审查、基金会资助压力、证人保护、公安侦查、民事开庭、校内处分，刑民分轨。</p>
+          </div>
+          <div class="round-score">88 → 90</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 006</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>可读性与沉浸感提升</h3>
+            <p>把原第 20 章拆为《七个月》《判决书》两章，全书 23→24 章；程序线加入季节、谈话室、合租屋、疲惫协作等场景细节，让判决爽点独立成章。</p>
+          </div>
+          <div class="round-score">90 → 92</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 007</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>语言润色与读者钩子</h3>
+            <p>前 8 章新增/强化章尾短钩子，脑内豆包提示去系统日志感，第 8 章男一男二初见删重复、强化风险与技术互补，团队关系更早成形。</p>
+          </div>
+          <div class="round-score">92 → 93</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 008</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>出版前清稿与一致性检查</h3>
+            <p>统一正文/大纲/评审 24 章结构，修正大纲早期遗留措辞（工具人式、脑内模型、宋家切割、刑事责任等），新增 publication-checklist.md。</p>
+          </div>
+          <div class="round-score">93 → 94</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 009</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>发布版排版与交付报告</h3>
+            <p>新增 release/第二次署名-发布版.md 与 release/delivery-report.md；发布版正文从清稿正文机械复制以避免版本漂移；publication checklist 标记发布包完成。</p>
+          </div>
+          <div class="round-score">94 → 95</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 010</div>
+          <div>
+            <span class="phase-tag">Phase D</span>
+            <h3>Website 介绍页与多模态配图</h3>
+            <p>新增静态阅读页 website/index.html，使用 GEI 多模态能力生成 3 张项目插图（Hero/阅读区/创作过程），把 24 章正文按 Markdown 直接渲染。</p>
+          </div>
+          <div class="round-score">维持 95</div>
+        </article>
+        <article class="round">
+          <div class="round-num">Round 011</div>
+          <div>
+            <span class="phase-tag">Phase D · 当前</span>
+            <h3>发布版评估 + 全人物画廊 + 公开发布</h3>
+            <p>对发布版做独立内容评估（含 7 维度评分），用 gei-imagine 双路径生成 9 张人物肖像，重构 website 把创作过程置顶、原文阅读置底，加入作者信息，并完成 GitHub + Vercel 公开部署。</p>
+          </div>
+          <div class="round-score">95 → 95.5</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2. 作品亮点 -->
+    <section id="highlights">
+      <div class="section-head">
+        <h2>她要夺回的不是爱情。</h2>
+        <p>《第二次署名》的复仇目标不是赢回男人，而是让知识劳动、女性证词和被轻视的人名进入档案。爽点来自公开反杀，也来自判决、撤稿、处分和项目重签。</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature"><b>署名权</b><p>她要夺回的不是一个名字的位置，而是知识劳动被看见、被承认、被记录的权利。</p></article>
+        <article class="feature"><b>录音键</b><p>前世她解释、退让、等待承认；第二世她录音、备份、归档、启动程序。</p></article>
+        <article class="feature"><b>女性话术反杀</b><p>宋绮年说"女性不要为难女性"，林书宁反问：互助的前提是普通女孩献祭吗？</p></article>
+        <article class="feature"><b>男一男二</b><p>沈砚负责程序，陆知白负责技术。他们可以争风吃醋，但权限只有"仅可评论"。</p></article>
+        <article class="feature"><b>证词协作员</b><p>刘桂芬不再是"一个阿姨"。胸牌写下全名时，她终于成为被认真听见的证人。</p></article>
+        <article class="feature"><b>湖边反杀</b><p>前世湖边是死亡现场；第二世湖边是录音、监控、证词与报警流程闭合的现场。</p></article>
+        <article class="feature"><b>制度性打脸</b><p>真正的清算不止发生在热搜里，也落在判决书、撤稿记录和校企项目协议里。</p></article>
+        <article class="feature"><b>脑内豆包</b><p>"符合组织要求[强]"不是开挂，而是女主把创伤、训练和证据意识整合成行动规则。</p></article>
+      </div>
+    </section>
+
+    <!-- 3. 全人物画廊 (新增 · 每位附独立插图) -->
+    <section id="characters">
+      <div class="section-head">
+        <h2>所有人都要回到证据面前。</h2>
+        <p>这不是"谁救了女主"的故事。沈砚提供程序，陆知白提供技术，女性同盟提供证词，而林书宁始终是项目负责人。九张人物肖像由 gei-imagine 多模态能力生成，画风统一为中国当代文学水彩与水墨混合。</p>
+      </div>
+      <div class="character-grid">
+        <article class="character-card">
+          <img class="portrait" src="assets/characters/01-lin-shuning.jpg" alt="林书宁肖像 — 社会学女博士在书桌前" loading="lazy" />
+          <div class="body">
+            <h3>林书宁</h3>
+            <span class="role">主角 · 26 岁</span>
+            <p class="meta">南江大学社会学博士二年级 · 研究方向:女性证词、组织权力、城市风险治理</p>
+            <p class="bio">前世死在湖边。第二世她不再让"温和"被解读为"会做人"，把每一次羞辱转化成录音、备份、项目策略和组织方案。</p>
+            <p class="quote">"我没有把自己放在受害者的位置上。是你们把我放在那里。"</p>
+          </div>
+        </article>
+
+        <article class="character-card">
+          <img class="portrait" src="assets/characters/02-shen-yan.jpg" alt="沈砚肖像 — 法学院博士后" loading="lazy" />
+          <div class="body">
+            <h3>沈砚</h3>
+            <span class="role">男一 · 28 岁</span>
+            <p class="meta">法学院博士后 · 校法律援助中心项目导师 · 前校辩论队队长</p>
+            <p class="bio">把伤害翻译成法律、校规和项目合规问题。他是男一，但不是拯救者，他的吸引力来自边界感。</p>
+            <p class="quote">"你要我陪你去，还是只帮你审材料？"</p>
+          </div>
+        </article>
+
+        <article class="character-card">
+          <img class="portrait" src="assets/characters/03-lu-zhibai.jpg" alt="陆知白肖像 — 计算社会科学博士兼世界五百强家族公子" loading="lazy" />
+          <div class="body">
+            <h3>陆知白</h3>
+            <span class="role">男二 · 27 岁</span>
+            <p class="meta">计算社会科学博士 · 世界五百强"陆氏寰球"家族公子 · 集团青年公益与 AI 治理项目负责人</p>
+            <p class="bio">负责技术线与资源线:匿名墙取证、网页存证、时间戳校验，以及把博士课题推成 ESG/AI 治理联合项目。</p>
+            <p class="quote">"它是检索增强，还是你自己的创伤模型？"</p>
+          </div>
+        </article>
+
+        <article class="character-card">
+          <img class="portrait" src="assets/characters/04-zhou-yuheng.jpg" alt="周予衡肖像 — 林书宁前男友" loading="lazy" />
+          <div class="body">
+            <h3>周予衡</h3>
+            <span class="role">反派 · 27 岁</span>
+            <p class="meta">林书宁前男友 · 社会学博士同门 · 学院青年项目红人</p>
+            <p class="bio">把亲密关系当作资源通道。借"共同成长"之名套取课题、田野材料与项目框架，并参与设计前世坠湖。</p>
+            <p class="quote">"书宁，我们之间一定要分这么清楚吗？"</p>
+          </div>
+        </article>
+
+        <article class="character-card">
+          <img class="portrait" src="assets/characters/05-song-qinian.jpg" alt="宋绮年肖像 — 校董之女与年度女性榜样" loading="lazy" />
+          <div class="body">
+            <h3>宋绮年</h3>
+            <span class="role">反派 · 28 岁</span>
+            <p class="meta">校董之女 · 学院创新基金负责人 · 南江大学"年度女性榜样" · 宋氏基金会青年理事</p>
+            <p class="bio">把"女性力量"当成阶层装饰。她最擅长说的话是:"我是在帮你成长。"</p>
+            <p class="quote">"书宁，我一直觉得女孩子应该体面一点。"</p>
+          </div>
+        </article>
+
+        <article class="character-card">
+          <img class="portrait" src="assets/characters/06-he-man.jpg" alt="何蔓肖像 — 林书宁同门博士与合租室友" loading="lazy" />
+          <div class="body">
+            <h3>何蔓</h3>
+            <span class="role">证人 · 25 岁</span>
+            <p class="meta">林书宁同门博士生 · 合租室友</p>
+            <p class="bio">前世曾旁观霸凌后沉默。第二世在林书宁给出证据后，她按下了那条录屏的"发送"键，成为第一个证人。</p>
+            <p class="quote">"我怕。但我还是把录屏发了。"</p>
+          </div>
+        </article>
+
+        <article class="character-card">
+          <img class="portrait" src="assets/characters/07-jiang-manqing.jpg" alt="蒋曼青肖像 — 青年女教师与合作导师" loading="lazy" />
+          <div class="body">
+            <h3>蒋曼青</h3>
+            <span class="role">合作导师 · 34 岁</span>
+            <p class="meta">青年女教师 · 林书宁博士课题组合作导师</p>
+            <p class="bio">曾被宋家资助项目排挤，学术署名被夺。第二世帮助林书宁理解校内申诉流程，提供学术证据链。</p>
+            <p class="quote">"署名页一定要带版本号和时间戳。"</p>
+          </div>
+        </article>
+
+        <article class="character-card">
+          <img class="portrait" src="assets/characters/08-liu-guifen.jpg" alt="刘桂芬肖像 — 湖区教学楼保洁员与证词协作员" loading="lazy" />
+          <div class="body">
+            <h3>刘桂芬（刘姨）</h3>
+            <span class="role">关键证人 · 54 岁</span>
+            <p class="meta">湖区教学楼保洁员 → 证词协作员</p>
+            <p class="bio">前世见过坠湖前的争执，但没人认真听她说话。第二世林书宁提前与她建立信任，使她成为关键目击者。</p>
+            <p class="quote">"我以前以为，我就会拖地、倒垃圾、开灯。后来林博士跟我说，我看见的东西也算数。"</p>
+          </div>
+        </article>
+
+        <article class="character-card">
+          <img class="portrait" src="assets/characters/09-lin-parents.jpg" alt="林家父母肖像 — 林启明与许嘉禾" loading="lazy" />
+          <div class="body">
+            <h3>林家父母</h3>
+            <span class="role">家庭支点</span>
+            <p class="meta">林启明（中学历史老师） · 许嘉禾（图书馆馆员）</p>
+            <p class="bio">父亲教她"历史不是胜利者写的，而是幸存证据之间的争执"；母亲教她做资料索引、备份。第二世里，她的证据管理方式来自母亲。</p>
+            <p class="quote">"有证据的人，也要有人愿意听。这次历史写上了你的名字。"</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. 作者 -->
+    <section id="author">
+      <div class="section-head">
+        <h2>关于作者</h2>
+        <p>本作由独立创作者使用 GEI Agent 协作完成。GEI 负责需求识别、世界观/人物/大纲设计、24 章正文撰写、文学评审、节奏精修、出版前清稿与发布版打包；作者负责整体方向把控、阶段性 CEO 决策与公开发布。</p>
+      </div>
+      <div class="author-card">
+        <div>
+          <p class="lead">作者 · AUTHOR</p>
+          <h3>刘仙升</h3>
+          <p>独立创作者 · GEI Agent 实验项目负责人。在 AI 协作写作的边界上探索"如何让算法成为创作者的脚手架，而不是替身"。</p>
+          <p>《第二次署名》是 GEI 在中文女性向重生复仇赛道的第一部完整长篇,从需求识别到 24 章发布版,经历 11 轮迭代。</p>
+          <div class="author-links">
+            <a href="https://x.com/LukeLiu95" target="_blank" rel="noopener noreferrer">𝕏 @LukeLiu95</a>
+            <a href="https://github.com/lukeliu95" target="_blank" rel="noopener noreferrer">GitHub @lukeliu95</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 原文阅读 (底部 · 用户指定) -->
+    <section id="read">
+      <div class="section-head">
+        <h2>原文阅读</h2>
+        <p>24 章完整发布版正文，已完成多轮清稿。从湖边死亡到第二次署名，林书宁用证据链重新夺回自己的名字。来源:<code>release/第二次署名-发布版.md</code>。</p>
+      </div>
+      <div class="reader-shell">
+        <aside class="toc" aria-label="章节目录">
+          <p class="toc-title">章节目录</p>
+          <div id="tocList">正在载入目录...</div>
+        </aside>
+        <div>
+          <div class="reader-tools" aria-label="阅读工具">
+            <button type="button" id="fontDown">字小</button>
+            <button type="button" id="fontUp">字大</button>
+            <button type="button" id="lineToggle">行距</button>
+            <button type="button" id="topButton">返回顶部</button>
+          </div>
+          <article class="novel" id="novel"><div class="loading">正在载入发布版正文...</div></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-row">
+      <span>© 2026 刘仙升 · 《第二次署名》 · GEI Agent 协作创作</span>
+      <span>
+        <a href="https://x.com/LukeLiu95" target="_blank" rel="noopener noreferrer">𝕏 @LukeLiu95</a> ·
+        <a href="https://github.com/lukeliu95" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </span>
+    </div>
+    <p style="margin-top: 12px; font-size: 12px;">交付目录: output/jimei-rebirth-revenge-novel · 正文版本: release/第二次署名-发布版.md · 全部插图由 GEI 多模态流程生成。</p>
+  </footer>
+
+  <script>
+    const novelEl = document.getElementById("novel");
+    const tocEl = document.getElementById("tocList");
+    const progressEl = document.getElementById("progress");
+    let readerFont = 18;
+    let readerLineTall = true;
+
+    function slugify(text, index) {
+      return `chapter-${index}-${text.replace(/[^一-龥a-zA-Z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function renderMarkdown(md) {
+      const lines = md.split(/\r?\n/);
+      const toc = [];
+      const html = [];
+      let chapterIndex = 0;
+
+      for (const raw of lines) {
+        const line = raw.trim();
+        if (!line) continue;
+        if (line.startsWith("# ")) {
+          html.push(`<h1>${escapeHtml(line.slice(2))}</h1>`);
+        } else if (line.startsWith("## ")) {
+          chapterIndex += 1;
+          const title = line.slice(3);
+          const id = slugify(title, chapterIndex);
+          toc.push({ id, title });
+          html.push(`<h2 id="${id}">${escapeHtml(title)}</h2>`);
+        } else {
+          html.push(`<p>${escapeHtml(line)}</p>`);
+        }
+      }
+
+      novelEl.innerHTML = html.join("");
+      tocEl.innerHTML = toc.map(item => `<a href="#${item.id}">${escapeHtml(item.title)}</a>`).join("");
+    }
+
+    async function loadNovel() {
+      try {
+        const response = await fetch("data/novel.md");
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        renderMarkdown(await response.text());
+      } catch (error) {
+        novelEl.innerHTML = `<div class="loading">正文加载失败。请通过本目录启动本地静态服务后访问，例如在项目根目录运行：python3 -m http.server 8000</div>`;
+        tocEl.textContent = "目录加载失败";
+      }
+    }
+
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      document.getElementById("themeToggle").textContent = document.body.classList.contains("dark") ? "日间" : "夜间";
+    });
+
+    document.getElementById("fontDown").addEventListener("click", () => {
+      readerFont = Math.max(15, readerFont - 1);
+      novelEl.style.setProperty("--reader-font", `${readerFont}px`);
+    });
+    document.getElementById("fontUp").addEventListener("click", () => {
+      readerFont = Math.min(24, readerFont + 1);
+      novelEl.style.setProperty("--reader-font", `${readerFont}px`);
+    });
+    document.getElementById("lineToggle").addEventListener("click", () => {
+      readerLineTall = !readerLineTall;
+      novelEl.style.setProperty("--reader-line", readerLineTall ? "1.9" : "1.65");
+    });
+    document.getElementById("topButton").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    window.addEventListener("scroll", () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      progressEl.style.width = `${pct}%`;
+    }, { passive: true });
+
+    loadNovel();
+  </script>
+</body>
+</html>
