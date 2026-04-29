@@ -75,33 +75,6 @@
     a { color: inherit; text-decoration-color: rgba(157, 51, 38, .42); text-underline-offset: 4px; }
     img { display: block; max-width: 100%; }
     video { display: block; max-width: 100%; }
-
-    .intro-video {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: clamp(20px, 3vw, 32px) 20px 0;
-    }
-    .intro-video-frame {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      background: var(--surface-2);
-    }
-    .intro-video-frame video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .intro-video-caption {
-      margin: 12px 4px 0;
-      color: var(--muted);
-      font: 600 13px/1.5 ui-sans-serif, system-ui, sans-serif;
-      text-align: center;
-    }
     button {
       font: inherit;
       color: inherit;
@@ -303,15 +276,26 @@
     /* GEI process — now featured at top */
     .process-visual {
       margin-bottom: 28px;
-      height: min(42vw, 430px);
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 560px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       overflow: hidden;
+      box-shadow: var(--shadow);
+      background: #000;
     }
-    .process-visual img {
+    .process-visual img,
+    .process-visual video {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+    .process-visual-caption {
+      margin: -16px 4px 28px;
+      color: var(--muted);
+      font: 600 13px/1.5 ui-sans-serif, system-ui, sans-serif;
+      text-align: center;
     }
     .timeline {
       display: grid;
@@ -628,24 +612,6 @@
   </header>
 
   <main id="top">
-    <section class="intro-video" aria-label="作品 10 秒介绍视频">
-      <div class="intro-video-frame">
-        <video
-          src="assets/intro-video.mp4"
-          poster="assets/hero-cover.png"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          aria-label="《第二次署名》10 秒文学意象蒙太奇 — 湖面、署名页、录音笔、证词协作员胸牌、判决书印章、发布会发言、书页飘起、书名浮现"
-        >
-          您的浏览器不支持视频自动播放，请<a href="assets/intro-video.mp4">点击下载视频</a>。
-        </video>
-      </div>
-      <p class="intro-video-caption">10 秒 16:9 文学意象蒙太奇 · gei-imagine 多模态生成</p>
-    </section>
-
     <article class="hero">
       <div>
         <p class="kicker">GEI Phase D Round 011 · Public Release</p>
@@ -673,8 +639,18 @@
         <p>这不是一次性提示词产出的故事。GEI Agent 走完 Phase A 需求识别 → Phase B 设定与开篇 → Phase C 质量评估 → Phase D 11 轮 CEO 循环精修，把爽文骨架、女权视角、智性取证和现实主义后段缝在一起。每轮都有独立的目标、产物与评分变化。</p>
       </div>
       <div class="process-visual">
-        <img src="assets/process-studio.png" alt="AI 辅助创作、章节卡片和多轮迭代工作台插图" />
+        <video
+          src="assets/intro-video.mp4"
+          poster="assets/hero-cover.png"
+          controls
+          preload="metadata"
+          playsinline
+          aria-label="《第二次署名》10 秒文学意象蒙太奇 — 湖面、署名页、录音笔、证词协作员胸牌、判决书印章、发布会发言、书页飘起、书名浮现。点击播放含温暖钢琴大提琴配乐。"
+        >
+          您的浏览器不支持视频播放，请<a href="assets/intro-video.mp4">点击下载视频</a>。
+        </video>
       </div>
+      <p class="process-visual-caption">10 秒文学意象蒙太奇 · 16:9 720p · gei-imagine 多模态生成,带钢琴大提琴配乐 · 点击 ▶ 开始播放</p>
       <div class="timeline" aria-label="生成过程时间线">
         <article class="round">
           <div class="round-num">Phase A-C</div>
