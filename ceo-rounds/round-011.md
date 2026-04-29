@@ -49,3 +49,95 @@
 ## 评分目标
 
 Round 011 不改正文质量,主要提升:发布完整度 + 视觉呈现 + 公开可访问性。GEI 综合评分预计 95 → 96(+1pp · 来源:发布完整度提升 + 全人物插图 + 公开 URL)。
+
+---
+
+## 执行结果
+
+### T1 · 内容评估 ✅
+
+`release/release-evaluation.md` 已写入。综合评分 **95.5/100**(Round 010 95.0 → +0.5)。7 维度评分:
+
+| 维度 | 分数 |
+|---|---:|
+| 类型契合度 | 94 |
+| 女权视角 | 93 |
+| 人物张力 | 92 |
+| 情节推进 | 94 |
+| 文学表达 | 92 |
+| 原创性 | 90 |
+| 发布完整度 | 95 |
+
+结论:**发布版可对外发布**。
+
+### T2 · 全人物插图 ✅
+
+`website/assets/characters/` 新增 9 张肖像(中国当代文学水彩水墨混合风格,3:4 portrait,1K):
+
+1. `01-lin-shuning.jpg` — 林书宁(主角 26 岁,书桌前 + 项目书 + 录音笔)
+2. `02-shen-yan.jpg` — 沈砚(男一 28 岁,法学院走廊 + 法律材料夹)
+3. `03-lu-zhibai.jpg` — 陆知白(男二 27 岁,工作墙 + 笔记本电脑)
+4. `04-zhou-yuheng.jpg` — 周予衡(反派 27 岁,夜晚校园湖边 + 深灰大衣)
+5. `05-song-qinian.jpg` — 宋绮年(反派 28 岁,雨中长廊 + 黑伞 + 珍珠耳环)
+6. `06-he-man.jpg` — 何蔓(证人 25 岁,合租屋 + 手机)
+7. `07-jiang-manqing.jpg` — 蒋曼青(合作导师 34 岁,办公室 + 论文堆)
+8. `08-liu-guifen.jpg` — 刘桂芬(关键证人 54 岁,教学楼走廊 + 暗酒红外套)
+9. `09-lin-parents.jpg` — 林家父母(书房双人场景)
+
+调用方式:`bash skills/gei-imagine/scripts/gemini-image.sh` 9 个并行 background bash,~30s 总耗时。Gemini API 实际返回 JPEG bytes,脚本自动从 `.png` 改名为 `.jpg`。
+
+### T3 · Website 重构 ✅
+
+`website/index.html` 重写。新结构:
+
+| 区块 | 位置 | 用途 |
+|---|---|---|
+| Hero | 顶部 | 书名 + Round 011 kicker + 阅读/过程 CTA + 三项 stat(24 章 / 11 轮 / 95.5 分) |
+| § GEI 11 轮创作过程 | **置顶**(用户指定)| 12 个时间线节点(Phase A-C 基底 + Round 001-011),含 phase-tag + 评分变化 |
+| § 作品亮点 | 中部 | 8 张特性卡(署名权 / 录音键 / 女性话术反杀 / 男一男二 / 证词协作员 / 湖边反杀 / 制度性打脸 / 脑内豆包) |
+| § 全人物画廊 | 中部 | **9 张大图卡片**(image + name + role tag + meta + bio + 招牌台词引言) |
+| § 关于作者 | 中部 | 刘仙升 author card + 𝕏 / GitHub 链接 |
+| § 原文阅读 | **底部**(用户指定)| 24 章 markdown reader + TOC + 字号/行距/夜间模式控制 |
+| Footer | 末尾 | 版权 + 𝕏 + GitHub |
+
+`website/data/novel.md` 与 `release/第二次署名-发布版.md` 保持同步(diff 0)。
+
+### T4 · GitHub 公开仓库 ✅
+
+`https://github.com/lukeliu95/the-second-signature`(public)
+
+- `git init -b main`
+- 42 文件首次 commit(`c274d8f` · 含 release/website/ceo-rounds/全部产物)
+- `gh repo create --public --source=. --push` 一步推送
+- 首次推送完成后追加一次 commit `1bf05fe` 把 vercel link 产生的 `website/.gitignore` 收进 repo
+
+### T5 · Vercel 部署 ✅
+
+`https://the-second-signature.vercel.app`(production aliased)
+
+- `vercel project add the-second-signature`(创建项目)
+- `cd website && vercel link --yes --project=the-second-signature`(链接 .vercel/)
+- `vercel deploy --prod --yes`(14MB 上传 / 28s 部署)
+- `vercel git connect https://github.com/lukeliu95/the-second-signature.git`(连接 GitHub)
+
+线上验证(curl):
+- `/` → 200
+- `/data/novel.md` → 200
+- `/assets/characters/01-lin-shuning.jpg` → 200
+- `/assets/hero-cover.png` → 200
+
+### T6 · 留痕 ✅
+
+- `local/gei-memory/projects-registry.md` 追加 Round 011 行
+- `local/gei-memory/customers/集美文学复仇小说.md` 加 GitHub/Vercel/作者元数据 + Round 011 retro 段
+- `local/gei-memory/learnings.md` 追加 Round 011 retro(3 个 pattern 候选 / 3 个 pitfall 候选)
+
+## 已知 follow-up
+
+1. **Vercel rootDirectory**: 当前默认 `.`。git-triggered auto-deploy 要 dashboard 改成 `website`(CLI 不支持设置)。本次 manual deploy 已上线,该 follow-up 不阻塞用户使用。
+2. **gemini-image.sh set -e bug**: 脚本末行 `[[ -f X.txt ]] && echo` 在文件不存在时触发 `set -e` 让脚本 exit 1,但图片实际已写入。9 张图全部正常,但 background task notification 显示 "failed"。已写入 learnings.md follow-up,等 GEI 工具维护轮修。
+3. **法律措辞专业校验**: 仍按 release-evaluation 第 4 条建议保留(正式出版前)。
+
+## 评分变化
+
+GEI 综合评分:**95.0 → 95.5**(+0.5pp,来源:发布完整度从 90 → 95 + 全人物视觉呈现完整度 + 公开可访问性)。
